@@ -13,18 +13,19 @@
 #}
 
 # Uncomment this to preserve the line number information for debugging stack traces.
--keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile
 
 # If you keep the line number information, uncomment this to hide the original source file name.
--renamesourcefileattribute SourceFile
+#-renamesourcefileattribute SourceFile
 
 # self
 -keep class li.songe.**{*;}
 -keep interface li.songe.**{*;}
 
 # fix ktor error https://youtrack.jetbrains.com/issue/KTOR-7298
-# it should the bug of agp
--keep class com.hjq.toast.** {*;}
+# it may be the bug of agp
+-keep class io.ktor.server.** { *; }
+-dontwarn com.sun.nio.**
 
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
 
@@ -47,10 +48,6 @@
 
 # https://github.com/ktorio/ktor/issues/379
 -keep class kotlin.reflect.jvm.internal.** { *; }
-
-# https://github.com/ktorio/ktor-documentation/blob/2.3.6/codeSnippets/snippets/proguard/proguard.pro
--keep class io.ktor.server.cio.EngineMain { *; }
--keep class io.ktor.server.config.HoconConfigLoader { *; }
 -keep class io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider { *; }
 
 # kotlin
