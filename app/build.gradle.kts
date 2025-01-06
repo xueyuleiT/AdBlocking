@@ -1,3 +1,20 @@
+/**
+ * amagi <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 fun String.runCommand(): String {
     val process = ProcessBuilder(split(" "))
         .redirectErrorStream(true)
@@ -48,7 +65,7 @@ plugins {
 }
 
 android {
-    namespace = "li.songe.gkd"
+    namespace = "com.ps.gkd"
     compileSdk = project.properties["android_compileSdk"].toString().toInt()
     buildToolsVersion = project.properties["android_buildToolsVersion"].toString()
 
@@ -56,7 +73,7 @@ android {
         minSdk = project.properties["android_minSdk"].toString().toInt()
         targetSdk = project.properties["android_targetSdk"].toString().toInt()
 
-        applicationId = "li.songe.gkd"
+        applicationId = "com.ps.gkd"
         versionCode = 52
         versionName = "1.9.3"
 
@@ -95,9 +112,9 @@ android {
     buildTypes {
         all {
             signingConfig = currentSigning
-            if (gitInfo?.tagName == null) {
-                versionNameSuffix = "-${gitInfo?.commitId?.substring(0, 7) ?: "unknown"}"
-            }
+//            if (gitInfo?.tagName == null) {
+//                versionNameSuffix = "-${gitInfo?.commitId?.substring(0, 7) ?: "unknown"}"
+//            }
         }
         release {
             isMinifyEnabled = true
@@ -114,22 +131,22 @@ android {
             applicationIdSuffix = ".debug"
 
             // add "debug" suffix
-            listOf(
-                "app_name" to "GKD",
-                "capture_snapshot" to "捕获快照",
-                "import_data" to "导入数据",
-                "http_server" to "HTTP服务",
-                "float_button" to "悬浮按钮",
-            ).forEach {
-                resValue("string", it.first, it.second + "-debug")
-            }
+//            listOf(
+//                "app_name" to "去广告神器",
+//                "capture_snapshot" to "捕获快照",
+//                "import_data" to "导入数据",
+//                "http_server" to "HTTP服务",
+//                "floating_button" to "悬浮按钮",
+//            ).forEach {
+//                resValue("string", it.first, it.second + "-debug")
+//            }
         }
     }
     productFlavors {
         flavorDimensions += "channel"
         create("gkd") {
             isDefault = true
-            manifestPlaceholders["updateEnabled"] = true
+            manifestPlaceholders["updateEnabled"] = false
         }
         create("foss") {
             manifestPlaceholders["updateEnabled"] = false

@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ad blocking</string>
+    <string name="accessibility_unavailable">Accessibility Unavailable</string>
+    <string name="saving_snapshot_in_progress">Saving snapshot in progress…</string>
+    <string name="skip_screenshot">Skipping screenshot, will use a blank image</string>
+    <string name="screenshot_unavailable">Screenshot unavailable, will use a blank image</string>
+    <string name="snapshot_success">Snapshot successful</string>
+    <string name="saved_to_records">Saved to records</string>
+    <string name="system_app">System App</string>
+    <string name="authorization">Authorization</string>
+    <string name="i_know">I understand</string>
+    <string name="no_data">No data available</string>
+    <string name="illegal_link">Illegal link</string>
+    <string name="close">Close</string>
+    <string name="always_close">Always close</string>
+    <string name="set_cookie_before_upload">Please set cookie before uploading</string>
+    <string name="application">Application</string>
+    <string name="show_system_apps">Show system apps</string>
+    <string name="show_hidden_apps">Show hidden apps</string>
+    <string name="enable">Enable</string>
+    <string name="no_search_results_try_filter">No search results, please try changing filter conditions</string>
+    <string name="download_subscription_failed">Failed to download subscription file</string>
+    <string name="parse_subscription_failed">Failed to parse subscription file</string>
+    <string name="subscription_exists">Subscription already exists</string>
+    <string name="subscription_id_invalid">Subscription ID cannot be empty</string>
+    <string name="negative_id_internal">Negative ID is for internal use</string>
+    <string name="subscription_added">Subscription added successfully</string>
+    <string name="subscription_modified">Subscription modified successfully</string>
+    <string name="enter_prompt_content">Please enter prompt content</string>
+    <string name="notification_copy_supports_variable">Notification copy supports variable replacement, rules as follows</string>
+    <string name="global_rule_count">Global rule count</string>
+    <string name="app_count">App count</string>
+    <string name="app_rule_group_count">App rule group count</string>
+    <string name="trigger_count">Trigger count</string>
+    <string name="example_template">Example template</string>
+    <string name="app">App</string>
+    <string name="rule_group">Rule group</string>
+    <string name="replacement_result">Replacement result</string>
+    <string name="enter_copy_content">Please enter copy content, supports variable replacement</string>
+    <string name="system_toast_frequency_limit">System Toast has a frequency limit, triggering too frequently will be forcibly hidden by the system</string>
+    <string name="use_system_prompt_for_low_frequency">If only using low-frequency rules like splash screen, you can use system prompts, otherwise it is recommended to disable this option and use custom style prompts</string>
+    <string name="hide_app_in_recent_tasks">Hide this app in [Recent Tasks]</string>
+    <string name="confirm_before_multiple_subscriptions">Confirm before enabling multiple subscriptions</string>
+    <string name="confirm_delete_selected_subscriptions">Confirm deletion of selected</string>
+    <string name="delete_subscriptions">Delete subscriptions</string>
+    <string name="refreshing_subscription">Refreshing subscription, please wait</string>
+    <string name="power_consumption_warning_multiple_subscriptions">Enabling multiple remote subscriptions may lead to the execution of a large number of duplicate rules, which may cause rule execution lag and excessive power consumption</string>
+    <string name="share_to_other_apps">Share to other apps</string>
+    <string name="custom_click_service">Custom click service based on advanced selectors + subscription rules</string>
+    <string name="custom_click_service_description">By using custom selectors and subscription rules, it can help you achieve clicking any position control, custom quick operations, and other advanced features</string>
+    <string name="capture_snapshot">Capture snapshot</string>
+    <string name="floating_button">Floating button"></string>
+
+    <string name="slow_query_conditions">Any single rule that meets the following 3 conditions at the same time is considered a slow query:
+1. The selector on the right side cannot be queried quickly and is not an active query, or it is used internally and cannot be queried quickly
+2. preKeys is empty
+3. matchTime is empty or greater than 10s</string>
+    <string name="slow_query_impact">Slow queries may lead to slow triggering or more power consumption</string>
+    <string name="invalid_position">Invalid position</string>
+    <string name="failed_to_get_root_node">Failed to get the root node of the interface information</string>
+    <string name="no_interface_change_detected">No interface change detected, capture failed</string>
+    <string name="accessibility_not_authorized">Accessibility not authorized</string>
+    <string name="delete_log">Delete log</string>
+    <string name="confirm_delete_all_logs">Confirm deletion of all trigger logs?</string>
+    <string name="no_logs">No logs available</string>
+    <string name="disable_in_this_app">Disable in this app</string>
+    <string name="remove_disable_in_this_app">Remove disable in this app</string>
+    <string name="remove_disable_on_this_page">Remove disable on this page</string>
+    <string name="disable_on_this_page">Disable on this page</string>
+    <string name="rule_group_disabled_in_apps">This rule group has already configured the disablement of the current app in its apps field, therefore it cannot be manually enabled</string>
+    <string name="tip_rule_group_disabled">Tip: This situation generally occurs when the global rule cannot be adapted/skipped adapted/individually adapted to the current app</string>
+    <string name="no_change_in_disable">No change in disable</string>
+    <string name="separate_with_newline_or_comma">Separate each disable with a newline or comma</string>
+    <string name="example1_disable_single_page">Example 1 - Disable a single page
+appId/activityId</string>
+    <string name="example2_disable_entire_app">Example 2 - Disable the entire app (remove /)
+appId</string>
+    <string name="example3_enable_this_app">Example 3 - Enable this app (prefix with !)
+!appId</string>
+    <string name="confirm_delete">Confirm deletion</string>
+    <string name="cannot_change_key_of_rule_group">Cannot change the key of the rule group</string>
+    <string name="update_subscription_file">Update subscription file</string>
+    <string name="subscription_file_id_mismatch">Subscription file ID mismatch</string>
+    <string name="quick_check_for_updates">Quick check for updates</string>
+    <string name="quick_check_for_updates_failed">Quick check for updates failed</string>
+    <string name="new_id">New ID=</string>
+    <string name="old_id_mismatch">Old ID mismatch=</string>
+    <string name="version_number_not_met">Version number not met</string>
+    <string name="start_checking_for_updates">Start checking for updates</string>
+    <string name="check_for_updates_failed">Check for updates failed</string>
+    <string name="end_checking_for_updates">End checking for updates</string>
+
+
+    <string name="local_subscription">Local subscription</string>
+    <string name="home">Home</string>
+    <string name="service_status">Service status</string>
+    <string name="group_rule">Group rule</string>
+    <string name="accessibility_service_running">Accessibility service is running</string>
+    <string name="accessibility_service_stopped">Accessibility service is stopped</string>
+    <string name="accessibility_authorization">Accessibility authorization</string>
+    <string name="service_fault">Service fault, please reauthorize</string>
+    <string name="authorize_to_run_accessibility_service">Authorize to run accessibility service</string>
+    <string name="persistent_notification">Persistent notification</string>
+    <string name="show_running_status_and_statistics">Show running status and statistics</string>
+    <string name="trigger_log">Trigger log</string>
+    <string name="rule_misfire_can_be_located_and_turned_off">Rule misfire can be located and turned off</string>
+    <string name="interface_log">Interface log</string>
+    <string name="record_opened_applications_and_interfaces">Record opened applications and interfaces</string>
+    <string name="slow_query">Slow query</string>
+    <string name="there_are_records">There are %1$d records</string>
+    <string name="latest_click">Latest click: %1$s</string>
+    <string name="please_enter_application_name_id">Please enter application name/ID</string>
+    <string name="sort">Sort</string>
+    <string name="option">Option</string>
+    <string name="show_system_applications">Show system applications</string>
+    <string name="show_hidden_applications">Show hidden applications</string>
+    <string name="no_rules">No rules</string>
+    <string name="no_search_results">No search results</string>
+    <string name="no_search_results_please_try_changing_filter_conditions">No search results, please try changing filter conditions</string>
+    <string name="loading_import">Loading import…</string>
+    <string name="settings">Settings</string>
+    <string name="trigger_prompt">Trigger prompt</string>
+    <string name="please_enter_prompt_content">Please enter prompt content</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="notification_copy">Notification copy</string>
+    <string name="copy_rule">Copy rule</string>
+    <string name="notification_copy_supports_variable_replacement_rules_as_follows_global_rule_count_application_count_application_rule_group_count_trigger_count">Notification copy supports variable replacement, rules as follows
+${i} Global rule count
+${k} Application count
+${u} Application rule group count
+${n} Trigger count
+
+Example template
+${i} Global/${k} Application/${u} Rule group/${n} Trigger
+
+Replacement result
+0 Global/1 Application/2 Rule group/3 Trigger</string>
+    <string name="please_enter_copy_content_supports_variable_replacement">Please enter copy content, supports variable replacement</string>
+    <string name="regular">Regular</string>
+
+    <string name="system_prompt">System prompt</string>
+    <string name="system_style_trigger_prompt">System style trigger prompt</string>
+    <string name="view_restrictions">View restrictions</string>
+    <string name="restriction_description">Restriction description</string>
+    <string name="system_toast_has_a_frequency_limit_triggering_too_frequently_will_be_forced_to_hide_by_the_system">System Toast has a frequency limit, triggering too frequently will be forcibly hidden by the system
+
+If only using low-frequency rules like splash screen, you can use system prompts, otherwise it is recommended to disable this option and use custom style prompts</string>
+    <string name="hide_in_background">Hide in background</string>
+    <string name="hide_this_application_in_recent_tasks">Hide this application in [Recent Tasks]</string>
+    <string name="theme">Theme</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="dynamic_color">Dynamic color</string>
+    <string name="color_follows_system_theme">Color follows system theme</string>
+    <string name="advanced_settings">Advanced settings</string>
+    <string name="subscription">Subscription</string>
+    <string name="subscription_settings">Subscription settings</string>
+    <string name="update_subscription">Update subscription</string>
+    <string name="power_consumption_warning">Power consumption warning</string>
+    <string name="confirm_before_enabling_multiple_subscriptions">Confirm before enabling multiple subscriptions</string>
+    <string name="confirm_deletion_of_subscriptions">Confirm deletion of selected %1$d subscriptions?</string>
+    <string name="confirm_deletion_of_subscriptions2">Confirm deletion of selected %1$d subscriptions?
+
+Note: Does not include local subscriptions</string>
+    <string name="enable_rule_matching">Enable rule matching</string>
+    <string name="refreshing_subscription_please_wait">Refreshing subscription, please wait</string>
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="import_data">Import data</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="power_consumption_warning_enabling_multiple_remote_subscriptions_may_cause_a_large_number_of_duplicate_rules_to_be_executed_which_may_cause_rule_execution_lag_and_excessive_power_consumption">Enabling multiple remote subscriptions may cause a large number of duplicate rules to be executed, which may cause rule execution lag and excessive power consumption
+
+Please consider carefully before confirming to enable!</string>
+    <string name="view_power_consumption_instructions">View power consumption instructions</string>
+    <string name="still_enable">Still enable</string>
+    <string name="share_data_file">Share data file</string>
+    <string name="download_subscription_file_failed">Failed to download subscription file</string>
+    <string name="parse_subscription_file_failed">Failed to parse subscription file</string>
+    <string name="subscription_already_exists">Subscription already exists</string>
+    <string name="subscription_id_mismatch">Subscription ID mismatch</string>
+    <string name="subscription_id_cannot_be_negative_id_is_for_internal_use">Subscription ID cannot be %1$d
+
+Negative ID is for internal use</string>
+    <string name="subscription_added_successfully">Subscription added successfully</string>
+    <string name="subscription_modified_successfully">Subscription modified successfully</string>
+    <string name="confirm_deletion_of_all_interface_records">Confirm deletion of all interface records?</string>
+    <string name="confirm_deletion_of_all_snapshot_records">Confirm deletion of all %1$d snapshot records?</string>
+    <string name="view">View</string>
+    <string name="share_snapshot_file">Share snapshot file</string>
+    <string name="save_screenshot_to_gallery">Save screenshot to gallery</string>
+    <string name="save_success">Save successful</string>
+    <string name="replace_screenshot_remove_privacy">Replace screenshot (remove privacy)</string>
+    <string name="screenshot_size_mismatch_cannot_replace">Screenshot size mismatch, cannot replace</string>
+    <string name="replace_success">Replace successful</string>
+
+    <string name="tip_text">Separate each disable with a newline or comma
+
+Example 1 - Disable a single page
+appId/activityId
+
+Example 2 - Disable the entire app (remove /)
+appId
+
+Example 3 - Enable this app (prefix with !)
+!appId</string>
+    <string name="builtin_disable">Built-in disable</string>
+    <string name="this_rule_group_has_already_configured_the_disablement_of_the_current_application_in_its_apps_field_therefore_it_cannot_be_manually_enabled">This rule group has already configured the disablement of the current application in its apps field, therefore it cannot be manually enabled</string>
+    <string name="tip_this_situation_generally_occurs_when_the_global_rule_cannot_be_adapted_skipped_adapted_separately_for_the_current_application">Tip: This situation generally occurs when the global rule cannot be adapted/skipped adapted/individually adapted for the current application</string>
+    <string name="switch_priority">Switch priority</string>
+    <string name="rule_manual_configuration_classification_manual_configuration_classification_default_rule_default">Rule manual configuration > Classification manual configuration > Classification default > Rule default</string>
+    <string name="reset_switch_remove_rule_manual_configuration">Reset switch: Remove rule manual configuration</string>
+    <string name="applications_rule_groups">%1$d applications/%2$d rule groups</string>
+    <string name="successfully_reset_rule_group_switches">Successfully reset %1$d rule group switches</string>
+    <string name="no_rule_groups_to_reset">No rule groups to reset</string>
+    <string name="delete_category">Delete category</string>
+    <string name="no_categories">No categories</string>
+    <string name="edit_category">Edit category</string>
+    <string name="please_enter_category_name">Please enter category name</string>
+    <string name="modification_successful">Modification successful</string>
+    <string name="add_category">Add category</string>
+    <string name="cannot_add_same_name_category">Cannot add a category with the same name</string>
+    <string name="authorization_status">Authorization status</string>
+    <string name="select_an_authorization_mode_to_operate">Select an authorization mode to operate</string>
+    <string name="normal_authorization_simple">Normal authorization (simple)</string>
+    <string name="grant_accessibility_permission_2_accessibility_service_needs_to_be_reauthorized_after_closing">1. Grant [Accessibility Permission]
+2. Accessibility service needs to be reauthorized after closing</string>
+    <string name="already_holding_accessibility_permission_can_continue_to_use">Already holding [Accessibility Permission], can continue to use</string>
+    <string name="cannot_enable_accessibility">Cannot enable accessibility?</string>
+    <string name="advanced_authorization_recommended">Advanced authorization (recommended)</string>
+    <string name="grant_write_secure_settings_permission_2_authorization_is_permanently_valid_including_accessibility_permission_3_application_can_automatically_open_accessibility_service_after_restarting_4_quick_restart_in_notification_bar_quick_switch_no_sense_keepalive">1. Grant [Write Secure Settings Permission]
+2. Authorization is permanently valid, including [Accessibility Permission]
+3. Application can automatically open accessibility service after restarting
+4. Quick restart in notification bar quick switch, no sense keepalive</string>
+    <string name="already_holding_write_secure_settings_permission_use_this_permission_first">Already holding [Write Secure Settings Permission], use this permission first</string>
+    <string name="please_authorize_first">Please authorize first</string>
+    <string name="no_sense_keepalive">No sense keepalive</string>
+
+    <string name="add_notification_bar_quick_switch_1_pull_down_the_notification_bar_to_the_quick_switch_icon_interface_2_find_the_quick_switch_named_3_add_this_switch_to_the_notification_panel">Add notification bar quick switch
+
+1. Pull down the notification bar to the [Quick Switch] icon interface
+2. Find the quick switch named %1$s
+3. Add this switch to the notification panel</string>
+    <string name="remove_possible_accessibility_restrictions">Remove possible accessibility restrictions</string>
+    <string name="remove_possible_accessibility_restrictions_1_some_systems_have_stricter_accessibility_restrictions_2_after_gkd_is_updated_the_system_will_restrict_the_switching_of_accessibility_3_re_authorization_can_solve_this_problem">Remove possible accessibility restrictions
+1. Some systems have stricter accessibility restrictions
+2. After GKD is updated, the system will restrict the switching of accessibility
+3. Re-authorization can solve this problem</string>
+    <string name="if_accessibility_can_be_switched_normally_please_ignore_this_item">If accessibility can be switched normally, please ignore this item</string>
+    <string name="other_ways_to_remove_restrictions">Other ways to remove restrictions</string>
+    <string name="manual_authorization_1_have_a_computer_with_adb_installed_2_after_enabling_debugging_mode_on_the_phone_connect_to_the_computer_for_debugging_authorization_3_run_the_following_command_in_the_computer_cmdpwsh">1. Have a computer with ADB installed
+2. After enabling debugging mode on the phone, connect to the computer for debugging authorization
+3. Run the following command in the computer cmd/pwsh</string>
+    <string name="authorization_failed_after_running">Authorization failed after running?</string>
+    <string name="authorization_successful">Authorization successful</string>
+    <string name="authorization_failed">Authorization failed: %1$s</string>
+    <string name="shizuku_authorization_error">Shizuku authorization error</string>
+    <string name="manual_authorization">Manual authorization</string>
+    <string name="root_authorization">ROOT authorization</string>
+    <string name="version_information">Version information</string>
+    <string name="build_channel">Build channel</string>
+    <string name="version_code">Version code</string>
+    <string name="version_name">Version name</string>
+    <string name="code_record">Code record</string>
+    <string name="commit_time">Commit time</string>
+    <string name="share_to_other_applications">Share to other applications</string>
+    <string name="share_log_file">Share log file</string>
+    <string name="save_to_downloads">Save to downloads</string>
+    <string name="generate_link_requires_scientific_internet">Generate link (requires scientific internet)</string>
+    <string name="about">About</string>
+    <string name="what_are_you_doing_ouch">What are you doing~ Ouch~</string>
+    <string name="open_source_address">Open source address</string>
+    <string name="original_open_source_address">Original author\'s open source address (thank you)</string>
+    <string name="auto_update">Auto update</string>
+    <string name="auto_check_for_updates">Auto check for updates</string>
+    <string name="update_channel">Update channel</string>
+    <string name="version_channel">Version channel</string>
+    <string name="beta_channel_updates_faster_but_unstable_may_contain_more_bugs_please_use_with_caution">Beta channel updates faster but unstable, may contain more bugs, please use with caution</string>
+    <string name="check_for_updates">Check for updates</string>
+    <string name="log">Log</string>
+    <string name="save_log">Save log</string>
+    <string name="save_7_days_of_logs_for_feedback">Save 7 days of logs for feedback</string>
+    <string name="export_log">Export log</string>
+    <string name="invalid_selector">Invalid selector</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_deletion_of">Confirm deletion of %1$s?</string>
+    <string name="add_global_rule_group">Add global rule group</string>
+    <string name="invalid_rule">Invalid rule</string>
+    <string name="rule_name_already_exists">Rule name already exists</string>
+    <string name="please_enter_rule_group">Please enter rule group</string>
+    <string name="no_change_in_rule">No change in rule</string>
+    <string name="cannot_change_the_key_of_the_rule_group">Cannot change the key of the rule group</string>
+    <string name="rule_group_details">Rule group details</string>
+    <string name="no_modification">No modification</string>
+    <string name="subscription_already_exists_with_the_same_link">Subscription already exists with the same link</string>
+    <string name="edit_subscription">Edit subscription</string>
+    <string name="add_subscription">Add subscription</string>
+    <string name="please_enter_subscription_link">Please enter subscription link</string>
+    <string name="please_set_cookie_before_uploading">Please set cookie before uploading</string>
+    <string name="you_cancelled_the_upload">You cancelled the upload</string>
+    <string name="uploading_file">Uploading file</string>
+    <string name="cancel_upload">Cancel upload</string>
+    <string name="upload_complete">Upload complete</string>
+    <string name="copy_and_close">Copy and close</string>
+    <string name="upload_failed">Upload failed</string>
+    <string name="change_cookie">Change Cookie</string>
+    <string name="loading">Loading…</string>
+    <string name="file_not_found">File not found</string>
+    <string name="update_error">Update error:</string>
+    <string name="application_rule">Application rule</string>
+    <string name="rule_category">Rule category</string>
+    <string name="feedback">Feedback</string>
+    <string name="export_data">Export data</string>
+    <string name="copy_link">Copy link</string>
+    <string name="edit_link">Edit link</string>
+    <string name="delete_subscription">Delete subscription</string>
+    <string name="confirm_deletion">Confirm deletion</string>
+    <string name="to_display_all_applications_please_grant_permission_to_read_the_application_list">To display all applications, please grant [Read application list permission]</string>
+    <string name="detected_fewer_applications_than_expected_you_can_try_granting_permission_to_read_the_application_list_or_reauthorize_after_revoking_permission">Detected fewer applications than expected, you can try granting [Read application list permission] or reauthorize after revoking permission</string>
+    <string name="request_permission">Request permission</string>
+    <string name="please_enter_an_integer_between_5000_and_65535">Please enter an integer between 5000 and 65535</string>
+    <string name="updated_restart_service">Updated, restart service</string>
+    <string name="updated">Updated</string>
+    <string name="shizuku_authorization">Shizuku authorization</string>
+    <string name="advanced_mode_accurately_distinguish_interface_id_force_simulate_click">Advanced mode: Accurately distinguish interface ID, force simulate click</string>
+    <string name="connect_to_debugging_tool_in_browser">Connect to debugging tool in browser</string>
+    <string name="click_any_link_below_to_connect_automatically">Click any link below to connect automatically</string>
+    <string name="only_accessible_by_this_device">Only accessible by this device</string>
+    <string name="service_port">Service port</string>
+    <string name="clear_subscriptions">Clear subscriptions</string>
+    <string name="delete_memory_subscriptions_when_service_is_turned_off">Delete memory subscriptions when service is turned off</string>
+    <string name="snapshot">Snapshot</string>
+    <string name="snapshot_log">Snapshot log</string>
+    <string name="screenshot_service">Screenshot service</string>
+    <string name="screenshot_service_is_required_to_generate_snapshots">Screenshot service is required to generate snapshots</string>
+    <string name="floating_window_service">Floating window service</string>
+    <string name="display_floating_button_to_save_snapshot">Display floating button to save snapshot</string>
+    <string name="volume_snapshot">Volume snapshot</string>
+
+    <string name="volume_change_snapshot">Save snapshot when volume changes</string>
+    <string name="screenshot_snapshot">Screenshot snapshot</string>
+    <string name="trigger_snapshot">Save snapshot when triggered</string>
+    <string name="view_limit">View limits</string>
+    <string name="limit_explanation">Limit explanation</string>
+    <string name="only_support_xiaomi">Only supports screenshot triggers on some Xiaomi devices
+
+Only saves node information, not images; users need to replace screenshots in the snapshot log</string>
+    <string name="hide_status_bar">Hide status bar</string>
+    <string name="hide_top_status_bar">Hide top status bar in screenshot</string>
+    <string name="save_prompt">Save prompt</string>
+    <string name="saving_snapshot">Saving Prompt\nSaving Snapshot</string>
+    <string name="generate_snapshot_log_link">Generate Snapshot/Log Link</string>
+    <string name="tutorial">Get Tutorial</string>
+    <string name="interface_record">Interface Record</string>
+    <string name="record_interface">Record Interface</string>
+    <string name="record_open_app_interface">Record Opened App and Interface</string>
+    <string name="other">Other</string>
+    <string name="foreground_floating_window">Foreground Floating Window</string>
+    <string name="add_transparent_floating_window">Add Transparent Floating Window</string>
+    <string name="view_function">View Function</string>
+    <string name="floating_window_function">Floating Window Function</string>
+    <string name="floating_window_function1">1. Increase GKD foreground priority, reduce the probability of being killed by the system\n2. Improve click response speed, closing it may cause slow or no clicks</string>
+    <string name="shizuku_interface_recognition">Shizuku-Interface Recognition</string>
+    <string name="more_accurate_interface_id">More Accurate Interface ID Recognition</string>
+    <string name="detecting">Detecting</string>
+    <string name="detection_failed">Detection Failed, Cannot Use</string>
+    <string name="enabled">Enabled</string>
+    <string name="shizuku_simulate_click">Shizuku-Simulate Click</string>
+    <string name="change_click_center">Change clickCenter to Forced Simulated Click</string>
+    <string name="slow_query_condition">Any single rule that meets the following 3 conditions at the same time is considered a slow query\n\n1. The right side of the selector cannot be queried quickly and is not an active query, and cannot be queried quickly\n2. preKeys is empty\n3. matchTime is empty or greater than 10s\n\nSlow queries may lead to slow triggering or more power consumption</string>
+    <string name="global_rule">Global Rule</string>
+    <string name="no_rule">No Rule</string>
+    <string name="trigger_record">Trigger Record</string>
+    <string name="delete_record">Delete Record</string>
+    <string name="confirm_delete_records">Are you sure to delete all trigger records?</string>
+    <string name="no_records">No Records</string>
+    <string name="view_rule_group">View Rule Group</string>
+    <string name="disable_in_app">Disable in This App</string>
+    <string name="remove_disable_in_app">Remove Disable in This App</string>
+    <string name="update_disable">Update Disable</string>
+    <string name="remove_disable_in_page">Remove Disable in This Page</string>
+    <string name="disable_in_page">Disable in This Page</string>
+    <string name="update_disable_page">Update Disable</string>
+    <string name="delete_record_success">Delete Successful</string>
+    <string name="current_rule_group">Current Rule Group</string>
+    <string name="global_rule_group">} Is Global Rule Group</string>
+    <string name="prompt">Prompt</string>
+    <string name="confirm_close_ad">Are you sure to click this position to close the ad?</string>
+    <string name="back">Back</string>
+    <string name="click_close_ad_button">Click Close Ad Button</string>
+    <string name="load_failed_retry">Load Failed, Click to Retry</string>
+    <string name="enter_app_name_id">Please Enter App Name/ID</string>
+    <string name="app_rule">App Rule</string>
+    <string name="show_uninstalled_apps">Show Uninstalled Apps</string>
+    <string name="delete_rule_group">Delete Rule Group</string>
+    <string name="confirm_delete_rule_group">Are you sure to delete all rule groups under %1$s?</string>
+    <string name="delete_success">Delete Successful</string>
+    <string name="no_search_results_try">No Search Results, Please Try to Modify the Filter Conditions</string>
+    <string name="add_app_rule">Add App Rule</string>
+    <string name="enter_rule">Please Enter Rule\nIf the app rule already exists, it will be appended</string>
+    <string name="no_empty_rule_group">Empty Rule Group is Not Allowed</string>
+    <string name="no_blank_name_rule_group">Blank Name Rule Group is Not Allowed, Please Name It First</string>
+    <string name="add">Add</string>
+    <string name="edit_app_rule">Edit App Rule</string>
+    <string name="enter_rule_edit">Please Enter Rule</string>
+    <string name="cannot_modify_rule_id">Rule ID Cannot Be Modified</string>
+    <string name="copy">Copy</string>
+    <string name="edit">Edit</string>
+    <string name="reset_switch">Reset Switch</string>
+    <string name="delete_rule_group_confirm">Are you sure to delete the rule group %1$s?</string>
+    <string name="view_image">View Image</string>
+
+    <string name="edit_rule_group">Edit Rule Group</string>
+    <string name="enter_rule_group">Please Enter Rule Group</string>
+    <string name="rule_group_no_change">Rule Group Unchanged</string>
+    <string name="illegal_json">Illegal JSON:</string>
+    <string name="illegal_rule">Illegal Rule</string>
+    <string name="cannot_change_key">Cannot Change Rule Group Key</string>
+    <string name="update_success">Update Successful</string>
+    <string name="update">Update</string>
+    <string name="edit_disable">Edit Disable</string>
+    <string name="enter_activity_id">Please Enter the activityId to Disable\nSeparated by New Line or Comma</string>
+    <string name="disable_no_change">Disable Item Unchanged</string>
+    <string name="add_rule_group">Add Rule Group</string>
+    <string name="enter_rule_group_app">Please Enter Rule Group\nCan Be APP Rule\nOr a Single Rule Group</string>
+    <string name="add_rule_group_illegal">Illegal Rule:</string>
+    <string name="id_not_match">ID Mismatch, Cannot Add</string>
+    <string name="cannot_add_empty_group">Cannot Add Empty Rule Group</string>
+    <string name="rule_name_exists">Rule with the Same Name Exists [%1$s]</string>
+    <string name="add_success">Add Successful</string>
+    <string name="accessibility_running">Accessibility is Running</string>
+    <string name="screenshot_service_running">Screenshot Service is Running</string>
+    <string name="floating_window_button_showing">Floating Window Button is Showing</string>
+    <string name="http_service_running">HTTP Service is Running</string>
+    <string name="snapshot_saved">Snapshot Saved to Record</string>
+    <string name="snapshot_service_running">Snapshot Service is Running</string>
+    <string name="show_service_status">Show Service Status</string>
+    <string name="floating_window_button_service">Floating Window Button Service</string>
+    <string name="floating_window_button_service_tip">Used for Actively Capturing Screen Snapshots with Floating Window Button</string>
+    <string name="screenshot_service_tip">Used for Capturing Screenshots to Generate Snapshots</string>
+    <string name="http_service_tip">Used for Connecting Web Tools for Debugging</string>
+    <string name="snapshot_notification">Snapshot Notification</string>
+    <string name="snapshot_notification_tip">Notification Sent After Capturing Snapshot</string>
+    <string name="snapshot_service_1">Snapshot Service</string>
+    <string name="snapshot_service_1_tip">Snapshot Service for Other Programs to Call</string>
+    <string name="snapshot_service">Snapshot Service for Other Programs to Call</string>
+    <string name="snapshot_service_tip">Notification Sent After Capturing Snapshot</string>
+    <string name="authorization_error">Authorization Error</string>
+    <string name="shizuku_authorization_failed">Shizuku Authorization Failed, Please Check if It is Running</string>
+    <string name="shizuku_not_installed">Shizuku Not Installed, Please Download and Install First</string>
+    <string name="open_shizuku">Open Shizuku</string>
+    <string name="download_shizuku">Go to Download</string>
+    <string name="reauthorize_to_remove_limit">Please Reauthorize to Remove Restrictions</string>
+    <string name="access_restricted">Access Restricted</string>
+    <string name="access_restricted_tip">Although GKD has the [Write Secure Settings Permission], it is not effective. The system may have restricted GKD with higher-level permissions (Access Restricted Settings) after updating GKD. Please reauthorize to remove the restrictions.</string>
+    <string name="go_to_authorize">Go to Authorize</string>
+    <string name="get_host_failed">Failed to get host:</string>
+    <string name="no_user_detected">No user login detected, please change the cookie</string>
+    <string name="enter_github_cookie">Please enter Github Cookie</string>
+    <string name="years_ago">%1$s years ago</string>
+    <string name="months_ago">%1$s months ago</string>
+    <string name="weeks_ago">%1$s weeks ago</string>
+    <string name="days_ago">%1$s days ago</string>
+    <string name="hours_ago">%1$s hours ago</string>
+    <string name="minutes_ago">%1$s minutes ago</string>
+    <string name="just_now">Just now</string>
+    <string name="global_groups">%1$d Global</string>
+    <string name="app_rule_groups">%1$d Apps/%1$d Rule Groups</string>
+    <string name="trigger">Trigger</string>
+    <string name="subscription_file_not_found">Subscription file not found</string>
+    <string name="subscription_file_parse_failed">Failed to parse subscription file</string>
+    <string name="subscription_id_not_match">Subscription file ID does not match</string>
+    <string name="request_update_link_failed">Failed to request update link</string>
+    <string name="parse_text_failed">Failed to parse text</string>
+    <string name="new_id_not_match">New ID %1$l does not match old ID %1$l</string>
+    <string name="update_subscriptions">Updated %1$d subscriptions</string>
+    <string name="no_updates">No updates available</string>
+    <string name="sort_by_name">Sort by Name</string>
+    <string name="sort_by_update_time">Sort by Update Time</string>
+    <string name="sort_by_trigger_time">Sort by Trigger Time</string>
+    <string name="pause">Pause</string>
+    <string name="sort_by_subscription_order">Sort by Subscription Order</string>
+    <string name="stable_version">Stable Version</string>
+    <string name="beta_version">Beta Version</string>
+    <string name="ad_removal_tool">Ad Removal Tool</string>
+    <string name="trigger_info">\${i} Global/\${k} App/\${u} Rule Group/\${n} Trigger</string>
+    <string name="create_uri_failed">Failed to create URI</string>
+    <string name="file_saved">Saved %1$s to download</string>
+    <string name="check_app_installed">Please check if the app is installed</string>
+    <string name="copy_success">Copy successful</string>
+    <string name="network_unavailable">Network unavailable</string>
+    <string name="new_version">New Version</string>
+    <string name="download_update">Download Update</string>
+    <string name="downloading">Downloading</string>
+    <string name="cancel_download">Cancel Download</string>
+    <string name="download_failed">Download failed</string>
+    <string name="download_complete">Download complete</string>
+    <string name="install_new_version">You can choose to install the new version</string>
+    <string name="install">Install</string>
+    <string name="shizuku_cannot_get_activity_task_service">Shizuku cannot get $ACTIVITY_TASK_SERVICE</string>
+    <string name="shizuku_get_method_signature_error">Shizuku method signature error</string>
+    <string name="shizuku_bind_service_timeout_failed">Shizuku bind service timeout failed</string>
+    <string name="grant_write_secure_settings_permission">Please grant [Write Secure Settings Permission] first</string>
+    <string name="close_accessibility_failed">Failed to close accessibility</string>
+    <string name="close_accessibility">Close Accessibility</string>
+    <string name="open_accessibility_failed">Failed to open accessibility</string>
+    <string name="open_accessibility">Open Accessibility</string>
+    <string name="restart_accessibility_failed">Failed to restart accessibility</string>
+    <string name="restart_accessibility">Restart Accessibility</string>
+    <string name="accessibility_unauthorized">Accessibility unauthorized</string>
+    <string name="pause_rule_matching">Pause rule matching</string>
+    <string name="expression_type_mismatch">Expression type mismatch</string>
+    <string name="operator_type_mismatch">Operator type mismatch</string>
+    <string name="argument_type_mismatch">Argument type mismatch</string>
+    <string name="unknown_attribute">Unknown attribute</string>
+    <string name="unknown_method">Unknown method</string>
+    <string name="unknown_method_argument">Unknown method argument</string>
+    <string name="accessibility_not_running">Accessibility is not running</string>
+    <string name="no_node_found">No node found</string>
+    <string name="discard_all_events">Discard all events</string>
+    <string name="create_accessibility_floating_window_failed">Failed to create accessibility floating window</string>
+    <string name="notification_permission_required">Current operation requires [Notification Permission]\n\nYou need to go to app permission settings to enable this permission</string>
+    <string name="read_app_list_permission_required">Current operation requires [Read App List Permission]\n\nYou need to go to app permission settings to enable this permission</string>
+    <string name="overlay_permission_required">Current operation requires [Overlay Permission]\n\nYou need to go to app permission settings to enable this permission</string>
+    <string name="write_external_storage_permission_required">Current operation requires [Write External Storage Permission]\n\nYou need to go to app permission settings to enable this permission</string>
+    <string name="permission_request">Permission Request</string>
+    <string name="max_execution_times_reached">Maximum execution times reached</string>
+    <string name="need_to_click_a_rule_first">Need to click a rule first</string>
+    <string name="matching_delay">In matching delay</string>
+    <string name="matching_time_exceeded">Matching time exceeded</string>
+    <string name="cooling_down">Cooling down</string>
+    <string name="click_delay">In click delay</string>
+    <string name="global">Global</string>
+    <string name="apps_and_rules">%1$d Apps/%1$d Rule Groups</string>
+    <string name="illegal_selector">Illegal selector</string>
+    <string name="illegal_position">Illegal position</string>
+    <string name="import_no_data">No data to import</string>
+    <string name="import_success">Import successful</string>
+    <string name="max_keep_size_reached">Maximum node count is %1$d, discarding subsequent nodes</string>
+    <string name="too_many_nodes">Too many nodes</string>
+    <string name="port_occupied">Port %1$d is occupied, please change and try again</string>
+    <string name="http_service_start_failed">Failed to start HTTP service</string>
+    <string name="http_service">HTTP Service</string>
+    <string name="snapshot_not_found">Corresponding snapshot not found</string>
+    <string name="screenshot_not_found">Corresponding screenshot not found</string>
+    <string name="memory_subscription">Memory Subscription</string>
+    <string name="accessibility_not_running_2">Accessibility is not running</string>
+    <string name="accessibility_not_enabled">Accessibility is not enabled</string>
+    <string name="get_root_node_failed">Failed to get root node of UI information</string>
+    <string name="no_ui_change_detected">No UI change detected, capture failed</string>
+    <string name="follow_system">Follow System</string>
+    <string name="always_open">Always Open</string>
+    <string name="follow_subscription">Follow Subscription</string>
+    <string name="enable_all">Enable All</string>
+    <string name="dis_enable_all">Disable All</string>
+    <string name="every_day">Every day</string>
+    <string name="every_3_days">Every 3 days</string>
+    <string name="every_7_days">Every 7 days</string>
+    <string name="user_agreement">User Agreement</string>
+    <string name="user_privacy_policy">Privacy Policy</string>
+</resources>

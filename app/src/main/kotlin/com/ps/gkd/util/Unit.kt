@@ -1,0 +1,40 @@
+/**
+ * amagi <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.ps.gkd.util
+
+import android.util.TypedValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import com.ps.gkd.app
+
+val Dp.px: Float
+    get() {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value, app.resources.displayMetrics
+        )
+    }
+
+val TextUnit.px: Float
+    get() {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            value, app.resources.displayMetrics
+        )
+    }
+

@@ -8,7 +8,7 @@
     android:canRetrieveWindowContent="true"
     android:canTakeScreenshot="true"
     android:isAccessibilityTool="true"
-    android:description="@string/a11y_desc"
+    android:description="@string/custom_click_service"
     android:notificationTimeout="100"
-    android:settingsActivity="li.songe.gkd.MainActivity"
+    android:settingsActivity="com.ps.gkd.MainActivity"
     tools:ignore="UnusedAttribute" />
