@@ -311,6 +311,7 @@ appId
     <string name="screenshot_service">截屏服务</string>
     <string name="screenshot_service_is_required_to_generate_snapshots">生成快照需要获取屏幕截图</string>
     <string name="floating_window_service">悬浮窗服务</string>
+    <string name="enable_floating_window_service">请开启悬浮窗服务权限</string>
     <string name="display_floating_button_to_save_snapshot">显示悬浮按钮点击保存快照</string>
     <string name="volume_snapshot">音量快照</string>
 
@@ -401,7 +402,7 @@ appId
     <string name="add_rule_group_illegal">非法规则:</string>
     <string name="id_not_match">id不一致,无法添加</string>
     <string name="cannot_add_empty_group">不能添加空规则组</string>
-    <string name="rule_name_exists">存在同名规则[%1$s]</string>
+    <string name="rule_name_exists">存在同名规则[%1$s],请删除后原规则后再添加</string>
     <string name="add_success">添加成功</string>
     <string name="accessibility_running">无障碍正在运行</string>
     <string name="screenshot_service_running">截屏服务正在运行</string>
@@ -533,4 +534,15 @@ appId
     <string name="every_7_days">每7天</string>
     <string name="user_agreement">用户协议</string>
     <string name="user_privacy_policy">隐私政策</string>
+    <string name="add_app_rule_type">添加方式</string>
+    <string name="manual_add">手动添加</string>
+    <string name="snapshot_add">快照添加</string>
+    <string name="snapshot_need_permission_list">快照方式需要开启以下权限</string>
+    <string name="rule_example">示例</string>
+    <string name="get_ad_position">请点击关闭广告的按钮，以便我们获取广告关闭的位置</string>
+    <string name="go_home">回桌面</string>
+    <string name="snapshot_tip">1.不要关闭此页面\n\n2.点击回桌面按钮，然后打开你要屏蔽的应用，在出现广告的页面点击屏幕上的悬浮按钮进行截屏</string>
+    <string name="close_ad">关闭广告</string>
+    <string name="your_app_name">你的 app 名称</string>
+    <string name="your_rule_group_name">你的规则组名称</string>
 </resources>

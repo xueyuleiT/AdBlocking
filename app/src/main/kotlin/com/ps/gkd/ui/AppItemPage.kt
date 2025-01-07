@@ -56,6 +56,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,9 +83,11 @@ import com.ps.gkd.R
 import com.ps.gkd.data.ExcludeData
 import com.ps.gkd.data.RawSubscription
 import com.ps.gkd.data.SubsConfig
+import com.ps.gkd.data.TakePositionEvent
 import com.ps.gkd.data.stringify
 import com.ps.gkd.db.DbSet
 import com.ps.gkd.getSafeString
+import com.ps.gkd.mainActivity
 import com.ps.gkd.ui.component.EmptyText
 import com.ps.gkd.ui.component.TowLineText
 import com.ps.gkd.ui.component.waitResult
@@ -101,6 +104,7 @@ import com.ps.gkd.util.launchTry
 import com.ps.gkd.util.throttle
 import com.ps.gkd.util.toast
 import com.ps.gkd.util.updateSubscription
+import kotlinx.coroutines.launch
 import li.songe.json5.Json5
 import li.songe.json5.encodeToJson5String
 

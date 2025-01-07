@@ -17,9 +17,17 @@
  */
 package com.ps.gkd.ui
 
+import android.app.PendingIntent
+import android.content.Intent
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.LogUtils
+import com.ps.gkd.MainActivity
+import com.ps.gkd.R
+import com.ps.gkd.data.ComplexSnapshot
 import com.ramcosta.composedestinations.generated.destinations.SubsPageDestination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,10 +37,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import com.ps.gkd.data.RawSubscription
 import com.ps.gkd.data.SubsConfig
+import com.ps.gkd.data.TakePositionEvent
 import com.ps.gkd.data.Tuple3
 import com.ps.gkd.db.DbSet
+import com.ps.gkd.debug.SnapshotExt.getSnapshotPath
+import com.ps.gkd.getSafeString
+import com.ps.gkd.mainActivity
 import com.ps.gkd.util.SortTypeOption
-import com.ps.gkd.util.appInfoCacheFlow
 import com.ps.gkd.util.collator
 import com.ps.gkd.util.findOption
 import com.ps.gkd.util.getGroupRawEnable
@@ -40,14 +51,181 @@ import com.ps.gkd.util.map
 import com.ps.gkd.util.storeFlow
 import com.ps.gkd.util.subsIdToRawFlow
 import com.ps.gkd.util.subsItemsFlow
+import com.ps.gkd.util.toast
+import com.ps.gkd.util.updateSubscription
+import com.ramcosta.composedestinations.generated.destinations.TakePositionPageDestination.invoke
+import com.ramcosta.composedestinations.utils.toDestinationsNavigator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 
-class SubsVm(stateHandle: SavedStateHandle) : ViewModel() {
+class SubsVm(stateHandle: SavedStateHandle) : ViewModel(), DefaultLifecycleObserver {
     private val args = SubsPageDestination.argsFrom(stateHandle)
+
+    private fun parseSnapshot(takePositionEvent: TakePositionEvent): ComplexSnapshot{
+        val snapshot = File(getSnapshotPath(takePositionEvent.snapshotId)).readText()
+        val shot = GsonUtils.fromJson(snapshot, ComplexSnapshot::class.java)
+        return shot
+    }
+
+    private fun snapshotToJson(shot: ComplexSnapshot, subscriptionPosition: RawSubscription.Position):JSONObject {
+        val groups = JSONArray()
+        val group = JSONObject()
+        group.put("actionCd", 3000)
+        group.put("name", shot.appName)
+        group.put("desc", getSafeString(R.string.close_ad))
+        group.put("enable", true)
+        val rules = JSONArray()
+        val rule = JSONObject()
+        val position = JSONObject()
+        position.put("left", subscriptionPosition.left)
+        position.put("top", subscriptionPosition.top)
+        rule.put("position", position)
+        rule.put("activityIds", shot.activityId)
+        rules.put(rule)
+        group.put("rules", rules)
+        groups.put(group)
+        val json = JSONObject()
+        json.put("id", shot.appInfo!!.id)
+        json.put("name", shot.appName)
+        json.put("groups", groups)
+        return json
+    }
+
+    private suspend fun addNewRule(
+        oldAppRaw: RawSubscription.RawApp?,
+        newAppRaw: RawSubscription.RawApp,
+        oldAppRawIndex: Int
+    ) {
+
+        // 重写添加的规则的 key
+        val initKey =
+            ((oldAppRaw?.groups ?: emptyList()).maxByOrNull { g -> g.key }?.key
+                ?: -1) + 1
+        val finalAppRaw = if (oldAppRaw != null) {
+            newAppRaw.copy(groups = oldAppRaw.groups + newAppRaw.groups.mapIndexed { i, g ->
+                g.copy(
+                    key = initKey + i
+                )
+            })
+        } else {
+            newAppRaw.copy(groups = newAppRaw.groups.mapIndexed { i, g ->
+                g.copy(
+                    key = initKey + i
+                )
+            })
+        }
+        val newApps = if (oldAppRaw != null) {
+            subsRawFlow.value!!.apps.toMutableList().apply {
+                set(oldAppRawIndex, finalAppRaw)
+            }
+        } else {
+            subsRawFlow.value!!.apps.toMutableList().apply {
+                add(finalAppRaw)
+            }
+        }
+        updateSubscription(
+            subsRawFlow.value!!.copy(
+                apps = newApps, version = subsRawFlow.value!!.version + 1
+            )
+        )
+        DbSet.subsItemDao.update(subsItemFlow.value!!.copy(mtime = System.currentTimeMillis()))
+        toast(getSafeString(R.string.add_success))
+    }
+
+    val subsRawFlow = subsIdToRawFlow.map(viewModelScope) { s -> s[args.subsItemId] }
+
+    private fun moveToFront(activity: MainActivity?) {
+        if (activity == null) {
+            return
+        }
+        val intent = activity.packageManager?.getLaunchIntentForPackage(activity.packageName)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            val pendingIntent: PendingIntent? = PendingIntent.getActivity(activity.applicationContext, 0, intent,
+                PendingIntent.FLAG_IMMUTABLE)
+            pendingIntent?.send()
+        } catch (e1: Exception) {
+            e1.printStackTrace()
+        }
+    }
+
+    init {
+
+        if (subsRawFlow.value!!.id < 0) {
+            viewModelScope.launch {
+                mainActivity!!.snapshot.collect {
+                    withContext(Dispatchers.IO) {
+                        try {
+                            val shot = parseSnapshot(it)
+
+                            if (it.position.left == null) {
+                                mainActivity?.runOnUiThread {
+                                    moveToFront(mainActivity)
+                                    mainActivity?.navController()?.toDestinationsNavigator()?.navigate(
+                                        com.ramcosta.composedestinations.generated.destinations.TakePositionPageDestination(
+                                            shot
+                                        )
+                                    )
+                                }
+                                return@withContext
+                            }
+
+                            val json = snapshotToJson(shot,it.position)
+
+                            val newAppRaw = try {
+                                RawSubscription.parseRawApp(json.toString())
+                            } catch (e: Exception) {
+                                LogUtils.d(e)
+                                toast(getSafeString(R.string.invalid_rule) + "${e.message}")
+                                return@withContext
+                            }
+                            if (newAppRaw.groups.isEmpty()) {
+                                toast(getSafeString(R.string.no_empty_rule_group))
+                                return@withContext
+                            }
+                            if (newAppRaw.groups.any { s -> s.name.isBlank() }) {
+                                toast(getSafeString(R.string.no_blank_name_rule_group))
+                                return@withContext
+                            }
+                            val oldAppRawIndex =
+                                subsRawFlow.value!!.apps.indexOfFirst { a -> a.id == newAppRaw.id }
+                            val oldAppRaw = subsRawFlow.value!!.apps.getOrNull(oldAppRawIndex)
+                            if (oldAppRaw != null) {
+                                // check same group name
+                                newAppRaw.groups.forEach { g ->
+                                    if (oldAppRaw.groups.any { g0 -> g0.name == g.name }) {
+                                        toast(
+                                            String.format(
+                                                getSafeString(R.string.rule_name_exists),
+                                                g.name
+                                            )
+                                        )
+                                        return@withContext
+                                    }
+                                }
+                            }
+
+                           addNewRule(oldAppRaw,newAppRaw,oldAppRawIndex)
+
+                        } catch (e: Exception) {
+                            e.message
+                        }
+
+                    }
+                    it.snapshotId
+                }
+            }
+        }
+
+    }
 
     val subsItemFlow =
         subsItemsFlow.map(viewModelScope) { s -> s.find { v -> v.id == args.subsItemId } }
 
-    val subsRawFlow = subsIdToRawFlow.map(viewModelScope) { s -> s[args.subsItemId] }
 
     private val appSubsConfigsFlow = DbSet.subsConfigDao.queryAppTypeConfig(args.subsItemId)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
@@ -166,5 +344,6 @@ class SubsVm(stateHandle: SavedStateHandle) : ViewModel() {
             results
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
 
 }

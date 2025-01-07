@@ -334,6 +334,7 @@ Example 3 - Enable this app (prefix with !)
     <string name="screenshot_service">Screenshot service</string>
     <string name="screenshot_service_is_required_to_generate_snapshots">Screenshot service is required to generate snapshots</string>
     <string name="floating_window_service">Floating window service</string>
+    <string name="enable_floating_window_service">Please enable the floating window service permission</string>
     <string name="display_floating_button_to_save_snapshot">Display floating button to save snapshot</string>
     <string name="volume_snapshot">Volume snapshot</string>
 
@@ -426,7 +427,7 @@ Only saves node information, not images; users need to replace screenshots in th
     <string name="add_rule_group_illegal">Illegal Rule:</string>
     <string name="id_not_match">ID Mismatch, Cannot Add</string>
     <string name="cannot_add_empty_group">Cannot Add Empty Rule Group</string>
-    <string name="rule_name_exists">Rule with the Same Name Exists [%1$s]</string>
+    <string name="rule_name_exists">Rule with the Same Name Exists [%1$s], Please delete the original rule before adding it again</string>
     <string name="add_success">Add Successful</string>
     <string name="accessibility_running">Accessibility is Running</string>
     <string name="screenshot_service_running">Screenshot Service is Running</string>
@@ -558,4 +559,15 @@ Only saves node information, not images; users need to replace screenshots in th
     <string name="every_7_days">Every 7 days</string>
     <string name="user_agreement">User Agreement</string>
     <string name="user_privacy_policy">Privacy Policy</string>
+    <string name="add_app_rule_type">Add method</string>
+    <string name="manual_add">Manually add</string>
+    <string name="snapshot_add">Snapshot add</string>
+    <string name="snapshot_need_permission_list">The snapshot method requires the following permissions to be enabled</string>
+    <string name="rule_example">Rule Example</string>
+    <string name="get_ad_position">Please click the \'close advertisement\' button so that we can obtain the location where the advertisement is closed</string>
+    <string name="go_home">Return to desktop</string>
+    <string name="snapshot_tip">1.Don\'t close this page\n\n2.Click the \'Return to desktop\' button, then open the application you want to block. On the page where the advertisement appears, click the floating button on the screen to take a screenshot</string>
+    <string name="close_ad">Close advertisement</string>
+    <string name="your_app_name">Your app name</string>
+    <string name="your_rule_group_name">Your rule group name</string>
 </resources>

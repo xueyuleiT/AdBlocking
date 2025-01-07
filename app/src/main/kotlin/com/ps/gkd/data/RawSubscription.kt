@@ -704,7 +704,7 @@ data class RawSubscription(
                 excludeActivityIds = getStringIArray(jsonObject, "excludeActivityIds"),
                 actionCd = getLong(jsonObject, "actionCd") ?: getLong(jsonObject, "cd"),
                 actionDelay = getLong(jsonObject, "actionDelay") ?: getLong(jsonObject, "delay"),
-                name = getString(jsonObject, "name") ?: error("miss group name"),
+                name = getString(jsonObject, "name") ?: error(" miss group name"),
                 desc = getString(jsonObject, "desc"),
                 enable = getBoolean(jsonObject, "enable"),
                 key = getInt(jsonObject, "key") ?: groupIndex,
@@ -808,8 +808,8 @@ data class RawSubscription(
 
         private fun jsonToGlobalGroups(jsonObject: JsonObject, groupIndex: Int): RawGlobalGroup {
             return RawGlobalGroup(
-                key = getInt(jsonObject, "key") ?: error("miss group[$groupIndex].key"),
-                name = getString(jsonObject, "name") ?: error("miss group[$groupIndex].name"),
+                key = getInt(jsonObject, "key") ?: error(" miss group[$groupIndex].key"),
+                name = getString(jsonObject, "name") ?: error(" miss group[$groupIndex].name"),
                 desc = getString(jsonObject, "desc"),
                 enable = getBoolean(jsonObject, "enable"),
                 actionCd = getLong(jsonObject, "actionCd"),

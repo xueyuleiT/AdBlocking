@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.ps.gkd.R
 import com.torrydo.floatingbubbleview.FloatingBubbleListener
 import com.torrydo.floatingbubbleview.service.expandable.BubbleBuilder
 import com.torrydo.floatingbubbleview.service.expandable.ExpandableBubbleService
@@ -59,13 +60,13 @@ class FloatingService : ExpandableBubbleService() {
                 imageVector = Icons.Default.CenterFocusWeak,
                 contentDescription = "capture",
                 modifier = Modifier.size(40.dp),
-                tint = Color.Red
+                tint = Color(getColor(R.color.blue_3a75f3))
             )
         }.enableAnimateToEdge(false)
 
         // https://github.com/gkd-kit/gkd/issues/62
         // https://github.com/gkd-kit/gkd/issues/61
-        val defaultFingerData = Tuple3(0L, 0f, 0f)
+        val defaultFingerData = Tuple3(0L, 200f, 200f)
         var fingerDownData = defaultFingerData
         val maxDistanceOffset = 50
         builder.addFloatingBubbleListener(object : FloatingBubbleListener {

@@ -37,6 +37,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -47,6 +48,7 @@ import androidx.navigation.compose.rememberNavController
 import com.blankj.utilcode.util.BarUtils
 import com.dylanc.activityresult.launcher.PickContentLauncher
 import com.dylanc.activityresult.launcher.StartActivityLauncher
+import com.ps.gkd.data.TakePositionEvent
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AuthA11YPageDestination
@@ -80,6 +82,7 @@ import com.ps.gkd.util.openApp
 import com.ps.gkd.util.openUri
 import com.ps.gkd.util.storeFlow
 import com.ps.gkd.util.toast
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -87,6 +90,8 @@ class MainActivity : ComponentActivity() {
     val mainVm by viewModels<MainViewModel>()
     val launcher by lazy { StartActivityLauncher(this) }
     val pickContentLauncher by lazy { PickContentLauncher(this) }
+
+    val snapshot = MutableSharedFlow<TakePositionEvent>()
 
     private var navController: NavHostController? = null
 

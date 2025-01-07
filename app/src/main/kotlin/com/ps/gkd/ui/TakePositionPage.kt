@@ -27,10 +27,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,14 +43,19 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.ps.gkd.R
 import com.ps.gkd.data.ComplexSnapshot
+import com.ps.gkd.data.RawSubscription
+import com.ps.gkd.data.TakePositionEvent
 import com.ps.gkd.debug.SnapshotExt.getScreenshotPath
 import com.ps.gkd.getSafeString
+import com.ps.gkd.mainActivity
+import com.ps.gkd.ui.home.HomeVm
 import com.ps.gkd.util.LocalNavController
 import com.ps.gkd.util.ProfileTransitions
 import com.ps.gkd.util.imageLoader
@@ -56,6 +63,7 @@ import com.ps.gkd.util.throttle
 import com.ps.gkd.util.toast
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import kotlinx.coroutines.launch
 
 @Destination<RootGraph>(style = ProfileTransitions::class)
 @Composable
@@ -63,6 +71,29 @@ fun TakePositionPage(snapshot: ComplexSnapshot) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val navController = LocalNavController.current
     var showPositionConfirmActionPrompt by remember { mutableStateOf(false) }
+    var showPrompt by remember { mutableStateOf(true) }
+
+    val takePositionEvent by remember { mutableStateOf(TakePositionEvent(snapshot.id,RawSubscription.Position(null,null,null,null))) }
+
+    val scope = rememberCoroutineScope()
+
+    if (showPrompt) {
+        AlertDialog(
+            onDismissRequest = { showPrompt = false },
+            title = { Text(text = getSafeString(R.string.prompt)) },
+            text = {
+                Text(text = getSafeString(R.string.get_ad_position))
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showPrompt = false
+                }) {
+                    Text(text = getSafeString(R.string.i_know))
+                }
+            }
+        )
+    }
+
 
     if (showPositionConfirmActionPrompt) {
         AlertDialog(
@@ -75,6 +106,10 @@ fun TakePositionPage(snapshot: ComplexSnapshot) {
 
                     TextButton(onClick = {
                         showPositionConfirmActionPrompt = false
+                        scope.launch {
+                            mainActivity!!.snapshot.emit(takePositionEvent)
+                        }
+                        navController.popBackStack()
                     }) {
                         Text(text = getSafeString(R.string.confirm))
                     }
@@ -118,8 +153,8 @@ fun TakePositionPage(snapshot: ComplexSnapshot) {
                     .pointerInput(Unit) {
                     detectTapGestures(onTap = {
                             offset: Offset ->
+                        takePositionEvent.position = RawSubscription.Position("width * ${offset.x * 1f / bmp.width}","height * ${offset.y * 1f / bmp.height}",null,null)
                         showPositionConfirmActionPrompt = true
-                        toast("x = ${offset.x * 1f / bmp.width} y = ${offset.y * 1f / bmp.height}")
                     })
                 })
         }

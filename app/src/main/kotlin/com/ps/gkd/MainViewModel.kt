@@ -70,18 +70,21 @@ class MainViewModel : ViewModel() {
         viewModelScope.launchTry(Dispatchers.IO) {
             val subsItems = DbSet.subsItemDao.queryAll()
             if (!subsItems.any { s -> s.id == LOCAL_SUBS_ID }) {
+                DbSet.subsItemDao.insert(
+                    SubsItem(
+                        id = LOCAL_SUBS_ID,
+                        enable = true,
+                        order = subsItems.minByOrNull { it.order }?.order ?: 0,
+                    )
+                )
+
                 updateSubscription(
                     RawSubscription(
                         id = LOCAL_SUBS_ID,
                         name = getSafeString(R.string.local_subscription),
-                        version = 0
-                    )
-                )
-                DbSet.subsItemDao.insert(
-                    SubsItem(
-                        id = LOCAL_SUBS_ID,
-                        order = subsItems.minByOrNull { it.order }?.order ?: 0,
-                    )
+                        version = 0,
+
+                        )
                 )
 
             }

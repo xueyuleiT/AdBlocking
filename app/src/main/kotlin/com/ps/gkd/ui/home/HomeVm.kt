@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.stateIn
 import com.ps.gkd.appScope
 import com.ps.gkd.data.RawSubscription
 import com.ps.gkd.data.SubsItem
+import com.ps.gkd.data.TakePositionEvent
 import com.ps.gkd.db.DbSet
 import com.ps.gkd.getSafeString
 import com.ps.gkd.ui.component.InputSubsLinkOption
@@ -51,8 +52,11 @@ import com.ps.gkd.util.subsItemsFlow
 import com.ps.gkd.util.toast
 import com.ps.gkd.util.updateSubsMutex
 import com.ps.gkd.util.updateSubscription
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class HomeVm : ViewModel() {
+
 
     val tabFlow = MutableStateFlow(controlNav)
 

@@ -17,8 +17,11 @@
  */
 package com.ps.gkd.ui
 
+import android.content.Intent
 import android.text.TextUtils
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,6 +32,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
@@ -59,26 +63,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.LogUtils
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.AppItemPageDestination
-import com.ramcosta.composedestinations.utils.toDestinationsNavigator
-import kotlinx.coroutines.flow.update
 import com.ps.gkd.MainActivity
 import com.ps.gkd.R
+import com.ps.gkd.a11yServiceEnabledFlow
 import com.ps.gkd.data.RawSubscription
 import com.ps.gkd.data.SubsConfig
 import com.ps.gkd.db.DbSet
+import com.ps.gkd.debug.FloatingService
 import com.ps.gkd.getSafeString
+import com.ps.gkd.permission.canDrawOverlaysState
+import com.ps.gkd.permission.notificationState
+import com.ps.gkd.permission.requiredPermission
+import com.ps.gkd.permission.writeSecureSettingsState
+import com.ps.gkd.service.A11yService
 import com.ps.gkd.ui.component.AppBarTextField
+import com.ps.gkd.ui.component.AuthCard
 import com.ps.gkd.ui.component.EmptyText
 import com.ps.gkd.ui.component.QueryPkgAuthCard
 import com.ps.gkd.ui.component.SubsAppCard
+import com.ps.gkd.ui.component.TextSwitch
 import com.ps.gkd.ui.component.TowLineText
 import com.ps.gkd.ui.component.waitResult
 import com.ps.gkd.ui.style.EmptyHeight
@@ -96,7 +107,15 @@ import com.ps.gkd.util.storeFlow
 import com.ps.gkd.util.throttle
 import com.ps.gkd.util.toast
 import com.ps.gkd.util.updateSubscription
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.AppItemPageDestination
+import com.ramcosta.composedestinations.generated.destinations.AuthA11YPageDestination
+import com.ramcosta.composedestinations.utils.toDestinationsNavigator
+import kotlinx.coroutines.flow.update
 import li.songe.json5.encodeToJson5String
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 @Destination<RootGraph>(style = ProfileTransitions::class)
@@ -111,7 +130,14 @@ fun SubsPage(
     val subsItem = vm.subsItemFlow.collectAsState().value
     val appAndConfigs by vm.filterAppAndConfigsFlow.collectAsState()
     val searchStr by vm.searchStrFlow.collectAsState()
-    val appInfoCache by com.ps.gkd.util.appInfoCacheFlow.collectAsState()
+    val appInfoCache by appInfoCacheFlow.collectAsState()
+
+    val writeSecureSettings by writeSecureSettingsState.stateFlow.collectAsState()
+    val a11yRunning by A11yService.isRunning.collectAsState()
+    val a11yServiceEnabled by a11yServiceEnabledFlow.collectAsState()
+    val a11yBroken = !writeSecureSettings && !a11yRunning && a11yServiceEnabled
+    val floatingRunning by FloatingService.isRunning.collectAsState()
+
 
     val subsRaw = vm.subsRawFlow.collectAsState().value
 
@@ -122,8 +148,49 @@ fun SubsPage(
         mutableStateOf(false)
     }
 
+    var showRuleExample by remember {
+        mutableStateOf(false)
+    }
+
+
+    var showConfirmDlg by remember {
+        mutableStateOf(false)
+    }
+
+    var showPrompt by remember {
+        mutableStateOf(false)
+    }
+
     var editRawApp by remember {
         mutableStateOf<RawSubscription.RawApp?>(null)
+    }
+
+    fun initJson():JSONObject {
+            val groups = JSONArray()
+            val group = JSONObject()
+            group.put("actionCd", 3000)
+            group.put("name", getSafeString(R.string.your_rule_group_name))
+            group.put("desc", getSafeString(R.string.close_ad))
+            group.put("enable", true)
+            val rules = JSONArray()
+            val rule = JSONObject()
+            val position = JSONObject()
+            position.put("left", "width * 0.8777")
+            position.put("top", "height * 0.0277")
+            rule.put("position", position)
+            rule.put("activityIds", "com.google.android.gms.ads.AdActivity")
+            rules.put(rule)
+            group.put("rules", rules)
+            groups.put(group)
+            val json = JSONObject()
+            json.put("id", "com.google.android.gms")
+            json.put("name", getSafeString(R.string.your_app_name))
+            json.put("groups", groups)
+            return json
+    }
+
+    var source by remember {
+        mutableStateOf(json.encodeToJson5String(RawSubscription.parseRawApp(initJson().toString())))
     }
 
     var showSearchBar by rememberSaveable {
@@ -151,6 +218,9 @@ fun SubsPage(
         }
     }
 
+
+
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -173,7 +243,7 @@ fun SubsPage(
                     )
                 } else {
                     TowLineText(
-                        title = if (subsRaw != null && !TextUtils.isEmpty(subsRaw.name)) if (subsRaw.id == -2L) getSafeString(R.string.local_subscription) else subsRaw.name  else subsItemId.toString(),
+                        title = if (subsRaw != null && !TextUtils.isEmpty(subsRaw.name)) if (subsRaw.id < 0) getSafeString(R.string.local_subscription) else subsRaw.name  else subsItemId.toString(),
                         subTitle = getSafeString(R.string.application_rule),
                     )
                 }
@@ -253,7 +323,7 @@ fun SubsPage(
         },
         floatingActionButton = {
             if (editable) {
-                FloatingActionButton(onClick = { showAddDlg = true }) {
+                FloatingActionButton(onClick = { showConfirmDlg = true }) {
                     Icon(
                         imageVector = Icons.Filled.Add,
                         contentDescription = null,
@@ -322,12 +392,146 @@ fun SubsPage(
         }
     }
 
+    fun moveToHome() {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.addCategory(Intent.CATEGORY_HOME)
+        context.startActivity(intent)
+    }
+
+    if (showPrompt) {
+        AlertDialog(
+            onDismissRequest = { showPrompt = false },
+            title = { Text(text = getSafeString(R.string.prompt)) },
+            text = {
+                Text(text = getSafeString(R.string.snapshot_tip))
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showPrompt = false
+                    moveToHome()
+                }) {
+                    Text(text = getSafeString(R.string.go_home))
+                }
+            }
+        )
+    }
+
+    if (showConfirmDlg) {
+        AlertDialog(title = { Text(text = getSafeString(R.string.add_app_rule_type)) }, text = {
+            Column {
+                Text(text = getSafeString(R.string.snapshot_need_permission_list))
+                if (!writeSecureSettings && !a11yRunning) {
+                    AuthCard(
+                        title = getSafeString(R.string.accessibility_authorization),
+                        desc = if (a11yBroken)  getSafeString(R.string.service_fault) else  getSafeString(R.string.authorize_to_run_accessibility_service),
+                        onAuthClick = {
+                            navController.toDestinationsNavigator().navigate(AuthA11YPageDestination)
+                        })
+                }
+
+                TextSwitch(
+                    title = getSafeString(R.string.floating_window_service),
+                    subtitle = getSafeString(R.string.display_floating_button_to_save_snapshot),
+                    checked = floatingRunning,
+                    onCheckedChange = vm.viewModelScope.launchAsFn<Boolean> {
+                        if (it) {
+                            requiredPermission(context, notificationState)
+                            requiredPermission(context, canDrawOverlaysState)
+                            FloatingService.start()
+                        } else {
+                            FloatingService.stop()
+                        }
+                    }
+                )
+            }
+
+        }, onDismissRequest = {
+            showConfirmDlg = false
+        }, confirmButton = {
+            TextButton(onClick = {
+                if (!writeSecureSettings && !a11yRunning) {
+                    toast(if (a11yBroken)  getSafeString(R.string.service_fault) else  getSafeString(R.string.authorize_to_run_accessibility_service))
+                    return@TextButton
+                }
+                if (!floatingRunning) {
+                    toast(getSafeString(R.string.enable_floating_window_service))
+                    return@TextButton
+                }
+                showConfirmDlg = false
+                showPrompt = true
+            }, enabled = (writeSecureSettings || a11yRunning) && floatingRunning) {
+                Text(text = getSafeString(R.string.snapshot_add))
+            }
+        }, dismissButton = {
+            TextButton(onClick = {
+                showConfirmDlg = false
+                showAddDlg = true
+            }) {
+                Text(text = getSafeString(R.string.manual_add))
+            }
+        })
+    }
+
+
+    if (showRuleExample) {
+        AlertDialog(
+            title = { Text(text = getSafeString(R.string.rule_example)) },
+            text = {
+                OutlinedTextField(
+                    value = source,
+                    onValueChange = { source = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
+                    placeholder = { Text(text = getSafeString(R.string.please_enter_rule_group)) },
+                    maxLines = 10,
+                )
+                LaunchedEffect(null) {
+                    focusRequester.requestFocus()
+                }
+            },
+            onDismissRequest = {
+                showRuleExample = false
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showRuleExample = false
+                }) {
+                    Text(text = getSafeString(R.string.cancel))
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showRuleExample = false
+                    ClipboardUtils.copyText(source)
+                    toast(getSafeString(R.string.copy_success))
+                }) {
+                    Text(text = getSafeString(R.string.copy))
+                }
+            },
+        )
+    }
+
 
     if (showAddDlg && subsRaw != null && subsItem != null) {
         var source by remember {
             mutableStateOf("")
         }
-        AlertDialog(title = { Text(text = getSafeString(R.string.add_app_rule)) }, text = {
+        AlertDialog(title = {
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(text = getSafeString(R.string.add_app_rule), modifier = Modifier.weight(1f))
+
+                TextButton(onClick = {
+                    showRuleExample = true
+                }) {
+                    Text(
+                        text = getSafeString(R.string.rule_example),
+                        textDecoration = TextDecoration.Underline,
+                        color = Color(context.getColor(R.color.blue_3a75f3))
+                    )
+                }
+            } }, text = {
             OutlinedTextField(
                 value = source,
                 onValueChange = { source = it },

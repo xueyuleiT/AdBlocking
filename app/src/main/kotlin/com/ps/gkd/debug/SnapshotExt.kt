@@ -17,15 +17,20 @@
  */
 package com.ps.gkd.debug
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.core.graphics.set
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ZipUtils
+import com.ps.gkd.MainActivity
 import com.ps.gkd.R
 import com.ps.gkd.data.ComplexSnapshot
+import com.ps.gkd.data.RawSubscription
 import com.ps.gkd.data.RpcError
+import com.ps.gkd.data.TakePositionEvent
 import com.ps.gkd.data.createComplexSnapshot
 import com.ps.gkd.data.toSnapshot
 import com.ps.gkd.db.DbSet
@@ -156,7 +161,6 @@ object SnapshotExt {
             val snapshot = snapshotDef.await()
 
             withContext(Dispatchers.IO) {
-
                 File(getSnapshotParentPath(snapshot.id)).apply { if (!exists()) mkdirs() }
                 File(getScreenshotPath(snapshot.id)).outputStream().use { stream ->
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -164,15 +168,11 @@ object SnapshotExt {
                 val text = keepNullJson.encodeToString(snapshot)
                 File(getSnapshotPath(snapshot.id)).writeText(text)
                 DbSet.snapshotDao.insert(snapshot.toSnapshot())
+                mainActivity!!.snapshot.emit(TakePositionEvent(snapshot.id,RawSubscription.Position(null,null,null,null)))
             }
             toast(getSafeString(R.string.snapshot_success))
 
 
-            mainActivity?.runOnUiThread {
-                mainActivity?.navController()?.toDestinationsNavigator()?.navigate(
-                    TakePositionPageDestination(snapshot)
-                )
-            }
             val desc = snapshot.appInfo?.name ?: snapshot.appId
             snapshotNotif.copy(
                 text = if (desc != null) {
@@ -187,3 +187,5 @@ object SnapshotExt {
         }
     }
 }
+
+
