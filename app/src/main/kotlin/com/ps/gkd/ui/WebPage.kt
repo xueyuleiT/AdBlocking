@@ -30,7 +30,7 @@ fun WebPage(webParams: WebParams) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val navController = LocalNavController.current
     val context = LocalContext.current as MainActivity
-        Scaffold(
+    Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(scrollBehavior = scrollBehavior, navigationIcon = {

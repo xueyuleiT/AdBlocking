@@ -128,3 +128,8 @@
 # The case when it is not available is hidden in a `try`-`catch`, as well as a check for Android.
 -dontwarn java.lang.ClassValue
 # -kotlinx.coroutines>
+
+-keep class com.ps.gkd.data.** { *; }
+-keep class android.accessibilityservice.** { *; }
+-keep class android.app.** { *; }
+

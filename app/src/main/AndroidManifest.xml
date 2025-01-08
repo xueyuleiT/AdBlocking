@@ -226,6 +226,14 @@
             android:name="com.blankj.utilcode.util.MessengerUtils$ServerService"
             tools:node="remove" />
 
+        <meta-data android:name="ScopedStorage" android:value="true" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3019517599805143~3918869215"/>
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="true" />
+
     </application>
 
 </manifest>

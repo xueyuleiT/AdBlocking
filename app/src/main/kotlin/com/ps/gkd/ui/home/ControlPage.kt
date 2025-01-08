@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,12 +101,12 @@ fun useControlPage(): ScaffoldExt {
                         contentDescription = null,
                     )
                 }
-                IconButton(onClick = throttle { openUri(HOME_PAGE_URL) }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Outlined.HelpOutline,
-                        contentDescription = null,
-                    )
-                }
+//                IconButton(onClick = throttle { openUri(HOME_PAGE_URL) }) {
+//                    Icon(
+//                        imageVector = Icons.AutoMirrored.Outlined.HelpOutline,
+//                        contentDescription = null,
+//                    )
+//                }
             })
         }
     ) { contentPadding ->

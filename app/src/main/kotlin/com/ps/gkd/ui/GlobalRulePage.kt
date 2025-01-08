@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -275,7 +275,7 @@ fun GlobalRulePage(subsItemId: Long, focusGroupKey: Int? = null) {
                                                 error = true,
                                             )
                                             updateSubscription(
-                                                rawSubs.copy(
+                                                rawSubs!!.copy(
                                                     globalGroups = rawSubs.globalGroups.filter { g -> g.key != group.key }
                                                 )
                                             )

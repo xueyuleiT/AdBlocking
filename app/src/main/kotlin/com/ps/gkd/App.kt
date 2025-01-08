@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -174,7 +174,7 @@ class App : Application() {
         }
         appScope.launchTry(Dispatchers.IO) {
             initStore()
-            com.ps.gkd.util.initAppState()
+            initAppState()
             initSubsState()
             initChannel()
             initShizuku()

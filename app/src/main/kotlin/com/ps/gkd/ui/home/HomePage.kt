@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,8 +53,11 @@ import com.ps.gkd.util.launchTry
 import com.ps.gkd.util.toast
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AdvancedPageDestination
 import com.ramcosta.composedestinations.generated.destinations.SnapshotPageDestination
+import com.ramcosta.composedestinations.utils.allRoutes
+import com.ramcosta.composedestinations.utils.findDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -83,7 +86,7 @@ fun loadJSONFromRaw(context: MainActivity): String {
 }
 
 
-@Destination<RootGraph>(style = ProfileTransitions::class, start = true)
+@Destination<RootGraph>(style = ProfileTransitions::class)
 @Composable
 fun HomePage() {
     val context = LocalContext.current as MainActivity

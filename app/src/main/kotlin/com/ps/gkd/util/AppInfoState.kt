@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,32 +24,32 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import com.blankj.utilcode.util.LogUtils
+import com.ps.gkd.META
+import com.ps.gkd.app
+import com.ps.gkd.appScope
+import com.ps.gkd.data.AppInfo
+import com.ps.gkd.data.toAppInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
-import com.ps.gkd.META
-import com.ps.gkd.app
-import com.ps.gkd.appScope
-import com.ps.gkd.data.AppInfo
-import com.ps.gkd.data.toAppInfo
 
 val appInfoCacheFlow = MutableStateFlow(emptyMap<String, AppInfo>())
 
 val systemAppInfoCacheFlow by lazy {
-    com.ps.gkd.util.appInfoCacheFlow.map(appScope) { c ->
+    appInfoCacheFlow.map(appScope) { c ->
         c.filter { a -> a.value.isSystem }
     }
 }
 
-val systemAppsFlow by lazy { com.ps.gkd.util.systemAppInfoCacheFlow.map(appScope) { c -> c.keys } }
+val systemAppsFlow by lazy { systemAppInfoCacheFlow.map(appScope) { c -> c.keys } }
 
 val orderedAppInfosFlow by lazy {
-    com.ps.gkd.util.appInfoCacheFlow.map(appScope) { c ->
+    appInfoCacheFlow.map(appScope) { c ->
         c.values.sortedWith { a, b ->
-            com.ps.gkd.util.collator.compare(a.name, b.name)
+            collator.compare(a.name, b.name)
         }
     }
 }
@@ -58,8 +58,8 @@ val orderedAppInfosFlow by lazy {
 // 某些设备在应用更新后出现权限错乱/缓存错乱
 private const val MINIMUM_NORMAL_APP_SIZE = 8
 val mayQueryPkgNoAccessFlow by lazy {
-    com.ps.gkd.util.appInfoCacheFlow.map(appScope) { c ->
-        c.values.count { a -> !a.isSystem && !a.hidden && a.id != META.appId } < com.ps.gkd.util.MINIMUM_NORMAL_APP_SIZE
+    appInfoCacheFlow.map(appScope) { c ->
+        c.values.count { a -> !a.isSystem && !a.hidden && a.id != META.appId } < MINIMUM_NORMAL_APP_SIZE
     }
 }
 
@@ -74,7 +74,7 @@ private val packageReceiver by lazy {
                  * 例: 小米应用商店更新应用产生连续 3个事件: PACKAGE_REMOVED->PACKAGE_ADDED->PACKAGE_REPLACED
                  * 使用 Flow + debounce 优化合并
                  */
-                com.ps.gkd.util.willUpdateAppIds.update { it + appId }
+                willUpdateAppIds.update { it + appId }
             }
         }
     }.apply {
@@ -107,33 +107,33 @@ private fun getAppInfo(appId: String): AppInfo? {
     }?.toAppInfo()
 }
 
-val updateAppMutex = com.ps.gkd.util.MutexState()
+val updateAppMutex = MutexState()
 
 private suspend fun updateAppInfo(appIds: Set<String>) {
     if (appIds.isEmpty()) return
-    com.ps.gkd.util.willUpdateAppIds.update { it - appIds }
-    com.ps.gkd.util.updateAppMutex.withLock {
+    willUpdateAppIds.update { it - appIds }
+    updateAppMutex.withLock {
         LogUtils.d("updateAppInfo", appIds)
-        val newMap = com.ps.gkd.util.appInfoCacheFlow.value.toMutableMap()
+        val newMap = appInfoCacheFlow.value.toMutableMap()
         appIds.forEach { appId ->
-            val info = com.ps.gkd.util.getAppInfo(appId)
+            val info = getAppInfo(appId)
             if (info != null) {
                 newMap[appId] = info
             } else {
                 newMap.remove(appId)
             }
         }
-        com.ps.gkd.util.appInfoCacheFlow.value = newMap
+        appInfoCacheFlow.value = newMap
     }
 }
 
 
 suspend fun initOrResetAppInfoCache() {
-    if (com.ps.gkd.util.updateAppMutex.mutex.isLocked) return
+    if (updateAppMutex.mutex.isLocked) return
     LogUtils.d("initOrResetAppInfoCache start")
-    com.ps.gkd.util.updateAppMutex.withLock {
-        val oldAppIds = com.ps.gkd.util.appInfoCacheFlow.value.keys
-        val appMap = com.ps.gkd.util.appInfoCacheFlow.value.toMutableMap()
+    updateAppMutex.withLock {
+        val oldAppIds = appInfoCacheFlow.value.keys
+        val appMap = appInfoCacheFlow.value.toMutableMap()
         withContext(Dispatchers.IO) {
             app.packageManager.getInstalledPackages(0).forEach { packageInfo ->
                 if (!oldAppIds.contains(packageInfo.packageName)) {
@@ -141,17 +141,17 @@ suspend fun initOrResetAppInfoCache() {
                 }
             }
         }
-        com.ps.gkd.util.appInfoCacheFlow.value = appMap
+        appInfoCacheFlow.value = appMap
     }
     LogUtils.d("initOrResetAppInfoCache end")
 }
 
 fun initAppState() {
-    com.ps.gkd.util.packageReceiver
+    packageReceiver
     appScope.launchTry(Dispatchers.IO) {
-        com.ps.gkd.util.initOrResetAppInfoCache()
-        com.ps.gkd.util.willUpdateAppIds.debounce(1000)
+        initOrResetAppInfoCache()
+        willUpdateAppIds.debounce(1000)
             .filter { it.isNotEmpty() }
-            .collect { com.ps.gkd.util.updateAppInfo(it) }
+            .collect { updateAppInfo(it) }
     }
 }

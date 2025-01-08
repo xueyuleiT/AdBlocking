@@ -66,6 +66,7 @@ json5 = "li.songe:json5:0.0.1"
 utilcodex = "com.blankj:utilcodex:1.31.1"
 activityResultLauncher = "com.github.DylanCaiCoding:ActivityResultLauncher:1.1.2"
 floatingBubbleView = "io.github.torrydo:floating-bubble-view:0.6.5"
+playServicesAds = "com.google.android.gms:play-services-ads:23.5.0"
 
 [plugins]
 kotlin_serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
@@ -80,3 +81,4 @@ google_ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 rikka_refine = { id = "dev.rikka.tools.refine", version.ref = "rikka" }
 benmanes_version = "com.github.ben-manes.versions:0.51.0"
 littlerobots_version = "nl.littlerobots.version-catalog-update:0.8.5"
+

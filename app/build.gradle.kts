@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,8 +74,8 @@ android {
         targetSdk = project.properties["android_targetSdk"].toString().toInt()
 
         applicationId = "com.ps.gkd"
-        versionCode = 52
-        versionName = "1.9.3"
+        versionCode = 1
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -128,7 +128,7 @@ android {
             )
         }
         debug {
-            applicationIdSuffix = ".debug"
+//            applicationIdSuffix = ".debug"
 
             // add "debug" suffix
 //            listOf(
@@ -144,7 +144,7 @@ android {
     }
     productFlavors {
         flavorDimensions += "channel"
-        create("gkd") {
+        create("AdBlocking") {
             isDefault = true
             manifestPlaceholders["updateEnabled"] = false
         }
@@ -281,4 +281,7 @@ dependencies {
     implementation(libs.permissions)
 
     implementation(libs.json5)
+    implementation(libs.playServicesAds)
+
+
 }

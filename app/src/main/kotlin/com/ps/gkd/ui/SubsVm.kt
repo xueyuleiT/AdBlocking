@@ -1,6 +1,6 @@
 /**
- * amagi <https://github.com/gkd-kit/gkd>
- * Copyright (C) 2024 amagi
+ * amagi and lisonge <https://github.com/gkd-kit/gkd>
+ * Copyright (C) 2024 amagi and lisonge
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -213,6 +213,7 @@ class SubsVm(stateHandle: SavedStateHandle) : ViewModel(), DefaultLifecycleObser
 
                         } catch (e: Exception) {
                             e.message
+                            toast(e.message ?: "未知错误")
                         }
 
                     }
